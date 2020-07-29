@@ -33,16 +33,14 @@ function ChangePassword() {
     const handleSubmit = async (event)=>{
         event.preventDefault()
         if(email.length == 0 ) return alert('bad')
-
         setId(true)
     }
-
 
     return (
 
         id ? 
         
-        <ChangePasswordVerificationAndSubmit email={email} id={id} PageStyle={ChangepasswordPage}/>
+        <ChangePasswordVerificationAndSubmit email={email} id={id} handleClose={()=>setId(false)} PageStyle={ChangepasswordPage}/>
 
         :
 

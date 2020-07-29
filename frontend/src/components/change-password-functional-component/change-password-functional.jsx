@@ -8,22 +8,23 @@ import Title from '../title/title'
 import CustomButton from '../CustomButton/CustomButton'
 import CustomInput from '../custom-input/custom-input'
 import Notification from '../notification/notification'
+import ErrorPage from '../error-page/error-page'
 
 import lockIcon from '../img/lock-icon.svg'
 import Logo from '../logo/logo'
 
-function ChangePasswordFunctional({email, PageStyle, history}) {
+function ChangePasswordFunctional({handleClose, email, PageStyle, history}) {
  
     const [items, setItems] = useState({
         password: '',
-        confirmPassword: '',
-        notification: false
+        confirmPassword: ''
     })
 
     const {loading, error, data} = useQuery(getUserWithEmail, {
         variables: {email}
     })
     
+
     let userInfo = data
 
     const [changePassword] = useMutation(changeUserPassword)
@@ -48,7 +49,7 @@ function ChangePasswordFunctional({email, PageStyle, history}) {
 
     const handleSubmitPassword = async (event)=>{
         event.preventDefault()
-        if(items.password !== items.confirmPassword) alert('the password dont match!')
+        if(items.password !== items.confirmPassword) return alert('the password dont match!')
         let{useremail} = userInfo
         const {data} = await changePassword({
             variables:{
@@ -60,22 +61,29 @@ function ChangePasswordFunctional({email, PageStyle, history}) {
         setTimeout(()=>{history.push('/')}, 300)
     }
 
+    
+
     if(loading) return (
         <PageStyle>
             <Logo/>
         </PageStyle>
     )
 
-    if(data.useremail == null)return(
+    if(error)return(
         <PageStyle>
-            error
+            <ErrorPage title='Something went wrong!' handleClick={handleClose}/>
         </PageStyle>
     )
 
-    if(data) return (
+    if(data.useremail== null) return(
         <PageStyle>
-            { items.notification ? <Notification color="green" /> : ''}
-            <Title margin='30px'>Please put your new password</Title>
+            <ErrorPage title='There is no account with that email' handleClick={handleClose}/>
+        </PageStyle>
+    )
+
+    if(data.undefined !== null) return (
+        <PageStyle>
+            <Title margin='30px' lineHeight='25px'>Please enter your new password</Title>
             <form onSubmit={handleSubmitPassword} style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
                 <CustomInput type='password' name='password' onChange={formHandler} value={items.password} label='Password' title='email' icon={lockIcon} />
                 <CustomInput type='password' name='confirmPassword' onChange={formHandler} value={items.confirmPassword} label='Confirm password' title='email' icon={lockIcon} />

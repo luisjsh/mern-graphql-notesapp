@@ -1,6 +1,7 @@
 import React , {useState} from 'react';
 import {connect} from 'react-redux'
 import {useQuery, useMutation} from '@apollo/client'
+import {Link, withRouter} from 'react-router-dom'
 
 import Title from '../title/title'
 import CustomButton from '../CustomButton/CustomButton'
@@ -99,7 +100,8 @@ function SignUp(props) {
             <CustomInput type='password' onChange={formHandler} value={items.passwordconfirm} name='passwordconfirm' pattern=".{8,}" title="Eight or more characters" label='Confirm password' icon={PasswordIcon} borderColor={items.passwordConfirmInputBorder}/>
 
             <CustomButton width='100%'>SignUp</CustomButton>
-            
+
+        <Link to='/changepassword'>¿forgot your password?</Link>
         </form>
     )
 }
@@ -110,4 +112,4 @@ const stateDispatchToProps = (dispatch)=>(
     }
 )
 
-export default connect (null, stateDispatchToProps) (SignUp)
+export default connect (null, stateDispatchToProps) (withRouter(SignUp))
