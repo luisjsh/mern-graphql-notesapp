@@ -27,3 +27,13 @@ export const getUserWithEmail = gql`
         }
     }
 `
+
+export const changeUserPassword = gql`
+    mutation($id: ID!, $password: String!){
+        userChangePassword(id: $id, password: $password){
+            id,
+            email,
+            password
+        }
+    }
+`

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
-import {ApolloProvider} from 'react-apollo' 
-import ApolloClient from 'apollo-boost'
+import {ApolloClient, InMemoryCache,ApolloProvider} from '@apollo/client'
 
 
 import Navbar from './components/Navbar/navbar'
@@ -11,7 +10,8 @@ import ChangePassword from './pages/change-password/change-password'
 import Notification from './components/notification/notification'
 
 const client = new ApolloClient({
-    uri: 'http://localhost:4000/graphql'
+    uri: 'http://localhost:4000/graphql',
+    cache: new InMemoryCache()
 })
 
 

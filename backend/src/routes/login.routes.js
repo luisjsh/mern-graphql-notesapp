@@ -12,4 +12,9 @@ router.get('/:useremail', async (req,res)=>{
     if( _id != null && email !=  null && password != null && username != null) return res.status(200).json({id: _id, email, password, username})
 })
 
+router.get('/changepassword/:password', async (req, res)=>{
+    let {password} = req.params
+    console.log(password)
+})
+
 module.exports = router

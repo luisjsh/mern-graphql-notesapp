@@ -19,8 +19,7 @@ const Close = styled.div`
     z-index: 0;
 `
 
-const modal  = ({children, handleClick}) =>(
-    
+const modal  = ({children, handleClick}) =>( 
     reactDOM.createPortal(
         <Modal>
             <Close onClick={handleClick} />

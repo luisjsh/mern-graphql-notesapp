@@ -85,11 +85,11 @@ const RootQuery = new GraphQLObjectType({
           }  
         },
         useremail:{
-          type:userType,
-          args: { email: {type: GraphQLString} },
-          resolve(parents, args){
-              return User.findOne({ email: args.email})
-          }  
+            type:userType,
+            args: { email: {type:GraphQLString}},
+            resolve(parents, args){
+                return User.findOne({email: args.email})
+            }
         }
     }
 })
@@ -111,6 +111,17 @@ const Mutation = new GraphQLObjectType({
                         username: args.username
                 })
                 return user.save()
+            }
+        },
+        userChangePassword:{
+            type: userType,
+            args: {
+                id: { type:GraphQLID},
+                password: { type:GraphQLString }
+            },
+            async resolve(parent, args){
+                await User.update({_id:args.id}, {$set: {password: args.password}})
+                return await User.findOne({_id: args.id})
             }
         },
         addNote: {

@@ -1,7 +1,6 @@
 import React , {useState} from 'react';
-import {graphql} from 'react-apollo'
 import {connect} from 'react-redux'
-import {flowRight as compose} from 'lodash'
+import {useQuery, useMutation} from '@apollo/client'
 
 import Title from '../title/title'
 import CustomButton from '../CustomButton/CustomButton'
@@ -30,24 +29,26 @@ function SignUp(props) {
         passwordConfirmInputBorder: '#9D9D9D'
     })  
 
-    let {users} = props.getUsers        
+    let {loading, error, data} = useQuery(getAllUsers)       
+    let [addUser, {users}] = useMutation(addUserMutation)
+
 
     const formHandler = ( event ) => {
         let { name, value } = event.target
 
         switch(name){
             case 'username':
-                const finduser = users.filter( ({email, username}) =>{return username === value})
+                const finduser = data.users.filter( ({email, username}) =>{return username === value})
 
-                if(finduser.length === 0 || value.length === 0 ||  finduser.length === users.length) setItem({...items, usernameInputBorder: '#9D9D9D', usernameValidated: true, [name]: value})
+                if(finduser.length === 0 || value.length === 0 ||  finduser.length === data.users.length) setItem({...items, usernameInputBorder: '#9D9D9D', usernameValidated: true, [name]: value})
                 if(finduser.length > 0 && value.length > 0) setItem({...items, usernameInputBorder: 'red', usernameValidated: false, [name]: value})
                 
                 break;
 
             case 'email':
-                const findemail = users.filter( ({email, username}) =>{return email === value})
+                const findemail = data.users.filter( ({email, username}) =>{return email === value})
                 
-                if(findemail.length === 0 || findemail.length === users.length) setItem({...items, emailInputBorder: '#9D9D9D', emailValidated: true, [name]: value})
+                if(findemail.length === 0 || findemail.length === data.users.length) setItem({...items, emailInputBorder: '#9D9D9D', emailValidated: true, [name]: value})
                 if(findemail.length > 0) setItem({...items, emailInputBorder: 'red', emailValidated:false , [name]: value})
                 break;
 
@@ -77,7 +78,7 @@ function SignUp(props) {
         if(usernameValidated === false || emailValidated === false || passwordConfirmValidated === false)  return alert('empty values')
 
         
-        const {data} = await props.addUser({
+        const {data} = await addUser({
             variables:{
                 email: items.email,
                 password: items.password,
@@ -89,6 +90,7 @@ function SignUp(props) {
 
     return (
         <form onSubmit={handleSubmit}>
+            
             <Title margin='80px' fontSize='40px'>Sign up</Title>
             
             <CustomInput type='text' onChange={formHandler} value={items.username} name='username' title='Please add your username' label='Username' icon={UserIcon} borderColor={items.usernameInputBorder}/>
@@ -108,11 +110,4 @@ const stateDispatchToProps = (dispatch)=>(
     }
 )
 
-export default connect (null, stateDispatchToProps)
-     (
-         compose(
-            graphql(getAllUsers, {name: 'getUsers'}),
-            graphql(addUserMutation, {name: 'addUser'})
-        )         
-        (SignUp)
-    );
+export default connect (null, stateDispatchToProps) (SignUp)

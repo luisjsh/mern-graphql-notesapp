@@ -61,7 +61,7 @@ function LoginModal(props) {
                 <CustomInput type='text' onChange={formHandler} value={items.email} name='email' label='Email' margin='10px' icon={EmailIcon} />
                 <CustomInput type='text' onChange={formHandler} value={items.password} name='password' label={items.passwordLabel} margin='10px' icon={PasswordIcon} borderColor={items.passwordInputBorder}/>  
                 <CustomButton width='100%'>Login</CustomButton>
-                <a onClick={()=>props.history.push('/changepassword')}>Change password</a>
+                <a onClick={()=>{props.history.push('/changepassword'); props.closeModal() }}>Change password</a>
             </form>
         </Container>
     )
