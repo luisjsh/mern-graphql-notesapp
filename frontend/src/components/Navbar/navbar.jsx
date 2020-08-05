@@ -12,8 +12,7 @@ import UserLoged from '../user-loged/user-loged'
 function Navbar(props) {
 
     const [viewModal, setViewModal] = useState(false)
-
-    console.log(props)
+ 
     return (
        <Nav>
            {viewModal ?

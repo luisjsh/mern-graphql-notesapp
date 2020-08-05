@@ -1,5 +1,4 @@
 const graphql = require('graphql')
-const _ = require('lodash')
 
 const User = require('../models/user')
 const Notes = require('../models/notesModel')
@@ -11,18 +10,6 @@ const {
     GraphQLSchema,
     GraphQLList
 } = graphql
-
-const notes = [{
-    id: '1',
-    title: 'LA VIDA DE KoKuLsA',
-    content: 'asdasd'
-},{
-    id: '2',
-    title: 'LA VIDA DE LELE',
-    content: 'esdesd'
-}]
-
-
 
 const NotesType = new GraphQLObjectType({
     name: 'note',
@@ -47,28 +34,35 @@ const userType = new GraphQLObjectType({
         password: {type: GraphQLString},
         username: {type: GraphQLString},
         notes:{
-            type: NotesType,
-            resolve(parent, args){
-                return Notes.findById(parent.userid)
+            type: new GraphQLList(NotesType),
+            async resolve (parent, args){
+                return await Notes.find({userid: parent.id})
             }
         }
-    })
+    })  
 })
 
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryTipe',
     fields:{
         note:{
-            type:NotesType,
-            args: { id: {type: GraphQLID} },
+            type: NotesType,
+            args: { userid: {type: GraphQLID} },
             resolve(parent, args){
-                return _.find(notes, {id: args.id})
+                return  Notes.findById(args.userid)
             }
         },
         notes:{
             type: new GraphQLList(NotesType),
             resolve(parent, args){
-                return notes
+                return Notes.find()
+            }
+        },
+        noteid:{
+            type: NotesType,
+            args: { id: {type: GraphQLID} },
+            resolve(parent, args){
+                return  Notes.findById(args.id)
             }
         },
         users:{
@@ -127,15 +121,19 @@ const Mutation = new GraphQLObjectType({
         addNote: {
             type: NotesType,
             args: {
+                id: {type: GraphQLID},
                 title: {type:GraphQLString},
-                content: {type:GraphQLString}
+                content: {type:GraphQLString},
+                user: {type:GraphQLString}
             },
             resolve(parent, args){
                 let note = new Notes({
                     title: args.title,
-                    content: args.content
+                    content: args.content,
+                    userid: args.id
                 })
                 note.save()
+                return note
             }
         }
     }

@@ -75,13 +75,13 @@ function ChangePasswordFunctional({handleClose, email, PageStyle, history}) {
         </PageStyle>
     )
 
-    if(data.useremail== null) return(
+    if(data.useremail == null) return(
         <PageStyle>
             <ErrorPage title='There is no account with that email' handleClick={handleClose}/>
         </PageStyle>
     )
 
-    if(data.undefined !== null) return (
+    if(data.useremail !== null) return (
         <PageStyle>
             <Title margin='30px' lineHeight='25px'>Please enter your new password</Title>
             <form onSubmit={handleSubmitPassword} style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>

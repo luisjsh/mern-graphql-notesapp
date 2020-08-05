@@ -6,7 +6,7 @@ const RoundButton = styled.button`
     height: ${props => props.height ? props.height : '30px'};
     border: 1px solid ${props => props.borderColor ? props.borderColor : 'red'};
     border-radius: 100%;
-    position: absolute;
+    position: ${props => props.position ? props.position : 'absolute'};
     background: ${ props => props.icon ? `url(${props.icon}) no-repeat` : '' };
     background-color: white;
     background-size: ${props => props.iconSize ? props.iconSize : ''};
@@ -19,8 +19,8 @@ const RoundButton = styled.button`
     cursor: pointer;
 
     &:hover{
-        width: 40px;
-        height: 40px;
+        width: ${props => props.HoverWidth ? props.HoverWidth : '40px'};
+        height: ${props => props.HoverHeight ? props.HoverHeight : '40px'};
     }
 `
 

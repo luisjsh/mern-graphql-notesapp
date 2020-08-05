@@ -37,3 +37,36 @@ export const changeUserPassword = gql`
         }
     }
 `
+
+export const getUserNotes = gql`
+    query getUserNotes($id: ID!){
+        user(id: $id){
+            notes{
+                id,
+                title,
+                content
+            }
+        }
+    }
+`
+
+export const addNoteMutation = gql`
+    mutation addNote($id: ID!, $title:String!, $content: String!){
+        addNote(id: $id, title:$title, content:$content){
+            user {
+              id
+            },
+            title,
+            content
+        }
+    }
+`
+
+export const getNoteWithId = gql`
+    query getNoteWithId ($id: ID!){
+        noteid(id: $id){
+            title,
+            content
+        }
+    }
+`
