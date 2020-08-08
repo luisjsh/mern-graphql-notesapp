@@ -10,6 +10,7 @@ const Title = styled.h1`
     position: ${props => props.position ? props.position : 'relative'};
     bottom: ${props => props.bottom ? props.bottom : 'none'};
     margin: ${props => props.margin ? props.margin : '0'};
+    cursor: ${props => props.cursor ? props.cursor : ''};
 
     &::before{
         ${props => props.before ? props.before : ''};

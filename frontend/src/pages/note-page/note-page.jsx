@@ -2,18 +2,26 @@ import React, {useState, useEffect} from 'react';
 import {useQuery, useMutation} from '@apollo/client'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
+import styled from 'styled-components'
 
-import {getNoteWithId, addNoteMutation} from '../../queries/queries'
+import {getNoteWithId, updateNote, destroyNote} from '../../queries/queries'
 
-import CustomInput from '../../components/custom-input/custom-input'
-import CustomButton from '../../components/CustomButton/CustomButton'
+import NoteContainer from '../../components/note-container/note-container'
 import Logo from '../../components/logo/logo'
+
+const Page = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+`
 
 function NotePage({userid, history, match}) {
     const {loading, error, data} = useQuery(getNoteWithId,{
         variables:{
             id: match.params.id
-        }
+        },
+        pollInterval: 500
     }) 
 
     const [note, setNote] = useState({
@@ -22,39 +30,62 @@ function NotePage({userid, history, match}) {
         updated: false
     })
 
+    const [UpdateNote] = useMutation(updateNote)
+    const [DestroyNote] = useMutation(destroyNote)
+
     const formHandler = (event)=>{
         let {name, value} = event.target
         setNote({...note, [name]: value})
     }
     
-    const submitHandler = (event)=>{
+    const handleClick = (event)=>{
         event.preventDefault()
-       /* const {data} = addNote({
+        const {data} = DestroyNote({
             variables:{
-                id: userid,
-                title: note.title,
-                content: note.content,
+                id: note.id
             }
         })
-        history.push('/homepage')*/
+        history.push('/homepage')
+    } 
+
+    const submitHandler = async (event)=>{
+        event.preventDefault()
+        const {data} = UpdateNote({
+            variables:{
+                id: note.id,
+                title: note.title,
+                content: note.content,
+                userid: userid
+            }
+        })
+        history.push('/homepage')
+        await setNote({...note, updated: false})
+        console.log(note)
     }
 
     if(data && note.updated == false) setNote({
+        id: match.params.id,
         title: data.noteid.title,
         content: data.noteid.content, 
         updated: true
     })
-
-    if (loading) return <Logo/>
+    
+    if (loading) return(
+        <Page>
+            <Logo/>
+        </Page>
+    )
 
     if(data.noteid !== null) return (
-        <div style={{padding: '30px'}}>
-        <form onSubmit={submitHandler}>
-            <CustomInput type='text' name='title' onChange={formHandler} value={note.title}/>
-            <CustomInput type='text' name='content' onChange={formHandler} value={note.content}/>
-            <CustomButton>Submit!</CustomButton>
-        </form>
-        </div>
+        <Page>
+            <NoteContainer 
+                handleSubmit={submitHandler}
+                handleClick={handleClick} 
+                handleChange={formHandler} 
+                titleValue={note.title} 
+                contentValue={note.content}
+                />
+        </Page>
     )
 }
 

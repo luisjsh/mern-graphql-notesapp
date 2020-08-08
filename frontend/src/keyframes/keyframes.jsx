@@ -49,3 +49,13 @@ export const notificationPopUp = keyframes`
         top: -100px;
     }
 `
+
+export const animatedBackground = keyframes`
+    0%{
+        background-position: left;
+    }
+
+    100%{
+        background-position: right;
+    }
+`

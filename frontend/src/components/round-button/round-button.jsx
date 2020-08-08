@@ -21,6 +21,7 @@ const RoundButton = styled.button`
     &:hover{
         width: ${props => props.HoverWidth ? props.HoverWidth : '40px'};
         height: ${props => props.HoverHeight ? props.HoverHeight : '40px'};
+        transform: ${props => props.hoverTransition ? props.hoverTransition : ''};
     }
 `
 

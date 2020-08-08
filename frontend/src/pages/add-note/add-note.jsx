@@ -5,8 +5,7 @@ import {withRouter} from 'react-router-dom'
 
 import {addNoteMutation} from '../../queries/queries'
 
-import CustomInput from '../../components/custom-input/custom-input'
-import CustomButton from '../../components/CustomButton/CustomButton'
+import NoteContainer from '../../components/note-container/note-container'
 
 function NotePage({userid, history}) {
 
@@ -35,13 +34,12 @@ function NotePage({userid, history}) {
     }
 
     return (
-        <div style={{padding: '30px'}}>
-        <form onSubmit={submitHandler}>
-            <CustomInput type='text' name='title' onChange={formHandler} value={note.title}/>
-            <CustomInput type='text' name='content' onChange={formHandler} value={note.content}/>
-            <CustomButton>Submit!</CustomButton>
-        </form>
-        </div>
+        <NoteContainer
+            handleSubmit={submitHandler}
+            handleChange={formHandler}
+            titleValue={note.title}
+            contentValue={note.content}
+            />
     )
 }
 

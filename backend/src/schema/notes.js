@@ -135,6 +135,32 @@ const Mutation = new GraphQLObjectType({
                 note.save()
                 return note
             }
+        },
+        updateNote: {
+            type: NotesType,
+            args: {
+                id: {type: GraphQLID},
+                title: {type:GraphQLString},
+                content: {type:GraphQLString},
+                user: {type:GraphQLString}
+            },
+            async resolve(parent, args){
+                await Notes.updateOne({_id:args.id}, {$set: {title: args.title, content: args.content}})
+                return await Notes.findById(args.id)       
+            }
+        },
+        destroyNote: {
+            type: NotesType,
+            args: {
+                id: {type: GraphQLID},
+                title: {type: GraphQLString},
+                content: {type:GraphQLString},
+                user: {type:GraphQLString}
+            },
+            async resolve(parent, args){
+                await Notes.deleteOne({_id: args.id})
+                return 0
+            }
         }
     }
 })

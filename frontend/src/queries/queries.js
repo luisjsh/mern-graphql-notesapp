@@ -70,3 +70,19 @@ export const getNoteWithId = gql`
         }
     }
 `
+
+export const updateNote = gql`
+    mutation updateNote($id: ID!, $title: String!, $content: String!){
+        updateNote(id: $id, title: $title, content: $content){
+            id
+        }
+    }
+`
+
+export const destroyNote = gql`
+    mutation destroyNote($id: ID!){
+        destroyNote(id: $id){
+            id
+        }
+    }
+`

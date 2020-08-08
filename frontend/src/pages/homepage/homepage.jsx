@@ -17,24 +17,14 @@ const Homepage = styled.div`
 `
 const Header = styled.header`
     width: 100%;
-    margin-top: 100px;
-    height: 10%;
-    z-index: 1;
-    position: sticky;
-    top: 0;
-    display: flex;
-    justify-content: center;
-    background:white;
-    align-items: center;
-    box-shadow: 0px 4px 56px 15px rgba(255,255,255,1);
+    margin-top: 55px;
 `
 
 const Section = styled.section`
-    height: auto;
-    width: 100%;
-    display: flex;
-    justify-content: space-around; 
-    flex-wrap: wrap;
+    padding: 3em;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
+    grid-gap: 2em;
 `
 
 function HomePage({userid,history}) {
@@ -42,16 +32,12 @@ function HomePage({userid,history}) {
 
     const {loading, error, data} = useQuery(getUserNotes, {
         variables: {id: userid},
-        pollInterval: 1500
+        pollInterval: 1000
     })
-    console.log(loading, error, data, 'asdasd')
 
     return (
         <Homepage>
-            <RoundButton onClick={()=>{history.push('/addnote')}} bottom='10px' right='10px' width='70px' height='70px' borderColor='black' position='fixed' HoverWidth='90px' HoverHeight='90px'/>
-            <Header>
-                <Title position='sticky' bottom='0'>Notes</Title>
-            </Header>
+            <Header />
 
             <Section>
                 {

@@ -14,6 +14,13 @@ const Logo = styled.button`
     height:70px;
     cursor: pointer;
     border:none;
+    transition: 0.3s;
+
+    &:hover{
+        width: 80px;
+        height: 80px;
+        background-size: 70px;
+    }
 `
 
 function logo (props){
