@@ -6,7 +6,6 @@ import {Link, withRouter} from 'react-router-dom'
 import Title from '../title/title'
 import CustomButton from '../CustomButton/CustomButton'
 import CustomInput from '../custom-input/custom-input'
-import Notification from '../notification/notification'
 
 import {addUserMutation, getAllUsers} from '../../queries/queries' 
 
@@ -30,8 +29,8 @@ function SignUp(props) {
         passwordConfirmInputBorder: '#9D9D9D'
     })  
 
-    let {loading, error, data} = useQuery(getAllUsers)       
-    let [addUser, {users}] = useMutation(addUserMutation)
+    let {data} = useQuery(getAllUsers)       
+    let [addUser] = useMutation(addUserMutation)
 
 
     const formHandler = ( event ) => {

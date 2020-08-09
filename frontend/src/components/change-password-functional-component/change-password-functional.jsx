@@ -7,7 +7,6 @@ import {getUserWithEmail, changeUserPassword} from '../../queries/queries'
 import Title from '../title/title'
 import CustomButton from '../CustomButton/CustomButton'
 import CustomInput from '../custom-input/custom-input'
-import Notification from '../notification/notification'
 import ErrorPage from '../error-page/error-page'
 
 import lockIcon from '../img/lock-icon.svg'
@@ -51,7 +50,7 @@ function ChangePasswordFunctional({handleClose, email, PageStyle, history}) {
         event.preventDefault()
         if(items.password !== items.confirmPassword) return alert('the password dont match!')
         let{useremail} = userInfo
-        const {data} = await changePassword({
+        await changePassword({
             variables:{
                 id: useremail.id,
                 password: items.password

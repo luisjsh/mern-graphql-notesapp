@@ -1,14 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import {useQuery, useMutation} from '@apollo/client'
+import {useQuery} from '@apollo/client'
 import {withRouter} from 'react-router-dom'
 import styled from 'styled-components'
 
 import {getUserNotes} from '../../queries/queries'
  
 import Notes from '../../components/notes/notes'
-import Title from '../../components/title/title'
-import RoundButton from '../../components/round-button/round-button'
+import Logo from '../../components/logo/logo'
+import ErrorPage from '../../components/error-page/error-page'
 
 const Homepage = styled.div`
     width: 100%;
@@ -35,7 +35,21 @@ function HomePage({userid,history}) {
         pollInterval: 1000
     })
 
-    return (
+    console.log(loading, error, data)
+
+    if(loading) return(
+        <Homepage>
+            <Logo/>
+        </Homepage>
+    )
+
+    if(error) return(
+        <Homepage>
+            <ErrorPage/>
+        </Homepage>
+    )
+
+    if(data) return (
         <Homepage>
             <Header />
 

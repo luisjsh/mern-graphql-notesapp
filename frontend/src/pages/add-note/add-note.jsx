@@ -23,7 +23,7 @@ function NotePage({userid, history}) {
 
     const submitHandler = (event)=>{
         event.preventDefault()
-        const {data} = addNote({
+        addNote({
             variables:{
                 id: userid,
                 title: note.title,

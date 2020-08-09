@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 
 import Title from '../title/title'
-import {animatedBackground} from '../../keyframes/keyframes'
+import {animatedBackground, noteAppear} from '../../keyframes/keyframes'
 
 const CardContainer = styled.div`
     border: 1px solid grey;
@@ -13,6 +13,8 @@ const CardContainer = styled.div`
     cursor: pointer;
     transition: 0.2s ease;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    animation: ${noteAppear} .5s ease;
+
 
     &:hover, &:focus{
         color: white;

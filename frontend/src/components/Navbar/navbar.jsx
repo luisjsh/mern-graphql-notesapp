@@ -1,7 +1,6 @@
 import React , {useState} from 'react';
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import DefaultUserRedirect from '../../functions/user'
 
 import CustomButton from '../CustomButton/CustomButton'
 import RoundButton from '../round-button/round-button'
@@ -10,7 +9,6 @@ import Logo from '../logo/logo'
 import {Nav, NavTitle} from './navbar-styles'
 import LoginModal from '../login-modal/login-modal'
 import UserLoged from '../user-loged/user-loged'
-import Title from '../title/title'
 
 import PlusIcon from '../img/plus-icon.svg'
 
@@ -35,7 +33,7 @@ function Navbar(props) {
 
             }
             
-            <Logo handleClick={DefaultUserRedirect} />
+            <Logo handleClick={()=>props.history.push('/')} />
 
             {
                 props.username === undefined || props.username === 'undefined' ? 

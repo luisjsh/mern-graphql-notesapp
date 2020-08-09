@@ -40,12 +40,6 @@ const Sidebar = styled.div`
     }
 `
 
-const SidebarHeader = styled.header`
-    width: 100%;
-    height: 30%;
-    border-bottom: 1px solid black;
-`
-
 const SidebarSection = styled.section`
     width: 100%;
     height: 70%;

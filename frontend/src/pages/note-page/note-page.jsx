@@ -17,13 +17,13 @@ const Page = styled.div`
 `
 
 function NotePage({userid, history, match}) {
-    const {loading, error, data} = useQuery(getNoteWithId,{
+    const {loading, error, data, updateQuery} = useQuery(getNoteWithId,{
         variables:{
             id: match.params.id
         },
-        pollInterval: 500
+        pollInterval: 1000
     }) 
-
+    
     const [note, setNote] = useState({
         title: data ? data.noteid.title : 'a',
         content: data ? data.noteid.content : '',
@@ -59,8 +59,6 @@ function NotePage({userid, history, match}) {
             }
         })
         history.push('/homepage')
-        await setNote({...note, updated: false})
-        console.log(note)
     }
 
     if(data && note.updated == false) setNote({
@@ -69,7 +67,9 @@ function NotePage({userid, history, match}) {
         content: data.noteid.content, 
         updated: true
     })
-    
+
+    if(data == undefined && note.updated == false) console.log('aaa')
+
     if (loading) return(
         <Page>
             <Logo/>

@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import styled from 'styled-components'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 
@@ -59,7 +58,7 @@ function LoginModal(props) {
                 <CustomInput type='email' onChange={formHandler} value={items.email} name='email' label='Email' margin='10px' icon={EmailIcon} />
                 <CustomInput type='password' onChange={formHandler} value={items.password} name='password' label={items.passwordLabel} margin='10px' icon={PasswordIcon} borderColor={items.passwordInputBorder}/>  
                 <CustomButton width='100%'>Login</CustomButton>
-                <a onClick={()=>{props.history.push('/changepassword'); props.closeModal() }}>Change password</a>
+                <span onClick={()=>{props.history.push('/changepassword'); props.closeModal() }}>Change password</span>
             </form>
         </Container>
     )

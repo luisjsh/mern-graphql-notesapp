@@ -59,3 +59,13 @@ export const animatedBackground = keyframes`
         background-position: right;
     }
 `
+
+export const noteAppear = keyframes`
+    0%{
+        opacity: 0.3;
+    }
+
+    100%{
+        opacity: 1;
+    }
+`

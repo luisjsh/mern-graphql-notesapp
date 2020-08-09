@@ -25,14 +25,14 @@ function ChangePassword() {
     const [id, setId] = useState(false)
 
     const formHandler = (event)=>{
-        const {name, value} = event.target
+        const {value} = event.target
        setEmail(value)
     }
     
 
     const handleSubmit = async (event)=>{
         event.preventDefault()
-        if(email.length == 0 ) return alert('bad')
+        if(email.length === 0 ) return alert('bad')
         setId(true)
     }
 
